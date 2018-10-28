@@ -28,7 +28,7 @@
 		ABOUT TEXT NOT NULL,
 		BIRTH DATE NOT NULL,
 		PROFILE BLOB,
-		RANKING VARCHAR(50) DEFAULT "Iniciante" NOT NULL
+		RANKING VARCHAR(50) DEFAULT "Begginer" NOT NULL
 
 	)ENGINE=INNODB;
 
@@ -354,16 +354,16 @@
 	CREATE PROCEDURE ADD_QUESTION(
 		IN VAR_TITTLE TEXT,
 		IN VAR_DESCRIPTION LONGTEXT,
-		IN VAR_USER_ID INT,
-		OUT VAR_ID INT
+		IN VAR_USER_ID INT
 	)
 	BEGIN 	
-		INSERT INTO USER(
+		INSERT INTO QUESTION(
 			ID,
 			TITTLE,
 			DESCRIPTION,
 			POSTDATE,
-			VIEW			
+			VIEW,
+			ID_USER			
 		) VALUES(
 			NULL,
 			VAR_TITTLE,
@@ -372,8 +372,8 @@
 			DEFAULT,
 			VAR_USER_ID
 		);
-		SET VAR_ID = (SELECT LAST_INSERT_ID() AS 'ID'); 
-    	SELECT VAR_ID;
+
+    	SELECT (SELECT LAST_INSERT_ID() AS 'ID') AS 'ID';
 	END $
 
 	CREATE PROCEDURE ADD_VIEW_QUESTION(
@@ -455,8 +455,7 @@
 	CREATE PROCEDURE ADD_ANSWER(
 		IN VAR_DESCRIPTION LONGTEXT,
 		IN VAR_QUESTION_ID INT,
-		IN VAR_USER_ID INT,
-		OUT VAR_ID INT
+		IN VAR_USER_ID INT
 	)
 	BEGIN 	
 		INSERT INTO ANSWER(
@@ -472,8 +471,8 @@
 			VAR_QUESTION_ID,
 			VAR_USER_ID
 		);
-		SET VAR_ID = (SELECT LAST_INSERT_ID() AS 'ID'); 
-    	SELECT VAR_ID;
+		SELECT LAST_INSERT_ID() AS 'ID'; 
+    
 	END $
 
 	CREATE PROCEDURE ALTER_ANSWER(
@@ -631,8 +630,7 @@
 	END $
 	
 	CREATE PROCEDURE ADD_TAG(
-		IN VAR_DESCRIPTION LONGTEXT,
-		OUT VAR_ID INT
+		IN VAR_DESCRIPTION LONGTEXT
 	)
 	BEGIN 	
 		INSERT INTO TAG(
@@ -642,8 +640,7 @@
 			NULL,
 			VAR_DESCRIPTION
 		);
-		SET VAR_ID = (SELECT LAST_INSERT_ID() AS 'ID'); 
-    	SELECT VAR_ID;
+    	SELECT LAST_INSERT_ID() AS 'ID';
 	END $
 
 	CREATE PROCEDURE SELECT_TAG(
@@ -654,7 +651,18 @@
 			T.ID AS 'ID',
 			T.DESCRIPTION AS 'DESCRIPTION'
 		FROM TAG T
-		WHERE C.ID =VAR_ID;
+		WHERE T.ID =VAR_ID;
+	END $
+
+	CREATE PROCEDURE SELECT_TAG_DESCRIPTION(
+		IN VAR_DESC VARCHAR(100)
+	)
+	BEGIN 	
+		SELECT 
+			T.ID AS 'ID',
+			T.DESCRIPTION AS 'DESCRIPTION'
+		FROM TAG T
+		WHERE T.DESCRIPTION = VAR_DESC;
 	END $
 
 	CREATE PROCEDURE SELECT_TAG_QUESTION(
@@ -686,8 +694,7 @@
 
 	CREATE PROCEDURE ADD_QUESTION_TAG(
 		IN VAR_ID_QUESTION INT,
-		IN VAR_ID_TAG INT,
-		OUT VAR_ID INT
+		IN VAR_ID_TAG INT
 	)
 	BEGIN 	
 		INSERT INTO QUESTION_TAG(
@@ -700,8 +707,7 @@
 			VAR_ID_TAG
 
 		);
-		SET VAR_ID = (SELECT LAST_INSERT_ID() AS 'ID'); 
-    	SELECT VAR_ID;
+    	SELECT LAST_INSERT_ID() AS 'ID' ;
 	END $
 
 	CREATE PROCEDURE DROP_QUESTION_TAG(
@@ -878,7 +884,7 @@
 	(null,'26','7'),
 	(null,'5','2'),
 	(null,'27','14'),
-	(null,'50','3'),
+	(null,'12','3'),
 	(null,'7','3'),
 	(null,'19','3'),
 	(null,'41','11'),
@@ -891,9 +897,9 @@
 	(null,'15','19'),
 	(null,'22','19'),
 	(null,'15','6'),
-	(null,'51','10'),
+	(null,'50','10'),
 	(null,'21','7'),
-	(null,'51','2'),
+	(null,'2','2'),
 	(null,'49','16'),
 	(null,'8','6'),
 	(null,'19','13'),
@@ -916,7 +922,7 @@
 	(null,'35','4'),
 	(null,'23','4'),
 	(null,'6','17'),
-	(null,'52','5'),
+	(null,'32','5'),
 	(null,'30','1'),
 	(null,'17','15'),
 	(null,'16','15'),
@@ -939,12 +945,12 @@
 	(null,'13','10'),
 	(null,'21','7'),
 	(null,'13','5'),
-	(null,'51','15'),
+	(null,'12','15'),
 	(null,'13','18'),
 	(null,'19','13'),
 	(null,'22','9'),
-	(null,'51','6'),
-	(null,'51','5'),
+	(null,'49','6'),
+	(null,'49','5'),
 	(null,'22','11'),
 	(null,'9','16'),
 	(null,'47','5'),
@@ -1275,7 +1281,7 @@
 	(null,'0','47','5'),
 	(null,'0','66','3'); 
 
-	--LIKE_QUESTION
+	-- LIKE_QUESTION
 		
 	INSERT INTO `LIKE_QUESTION` VALUES (null,'1','28','6'),
 	(null,'0','15','9'),
@@ -1377,3 +1383,6 @@
 	(null,'0','14','8'),
 	(null,'0','9','3'),
 	(null,'0','10','6'); 
+
+
+	update user set password = '123' ;

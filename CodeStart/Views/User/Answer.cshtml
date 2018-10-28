@@ -1,0 +1,80 @@
+﻿@model CodeStart.Models.ViewAnswers
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Logged.cshtml";
+}
+<style>
+    .answers-here a {
+        color: deeppink;
+        font-size: 16px;
+        text-decoration: none;
+        transition: 1s;
+    }
+    .answers-here a:hover {
+        color: white;
+        text-decoration: none;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="middle-content">
+            <div class="to-middle mr-2 ml-2">
+                <center>
+                    <h1 class="pb-1"><span class="to-purple">Answer</span> here</h1>
+                    <hr class="gray-bar">
+                </center>
+
+                <div class="mt-2 question-area">
+
+                    <div class="question-content p-4">
+                        <div class="head-question">
+                            <small>
+                                By @Html.DisplayFor(modelItem => Model.Question.User.Username) |
+                                @Html.DisplayFor(modelItem => Model.Question.Postdate) |
+                                <i class="fa fa-eye" aria-hidden="true"></i> @Html.DisplayFor(modelItem => Model.Question.View)
+                            </small>
+                            <h6>
+                                @Html.DisplayFor(modelItem => Model.Question.Tittle)
+                            </h6>
+                        </div>
+
+                        <div class="pl-3">
+                            <p>
+                                @Html.DisplayFor(modelItem => Model.Question.Description)
+                            </p>
+                            <div class="tags-content">
+                                @foreach (var value in Model.Question.Tags)
+                                {
+                                <span class="tag">@Html.DisplayFor(modelItem => value.Description)</span>
+                                }
+                            </div>
+                            <h4 class="mt-4">Answers</h4>
+                            <div class="pl-4">
+                                @foreach (var item in Model.Answers)
+                                {
+
+                                    <div class="answers-content mb-4">
+                                        <small>
+                                            By @Html.DisplayFor(modelItem => item.User.Username) |
+                                            @Html.DisplayFor(modelItem => item.Postdate)
+                                        </small>
+                                        <p>
+                                            @Html.DisplayFor(modelItem => item.Description)
+                                        </p>
+                                    </div>
+                                }
+                                <span class="answers-here">
+                                    @Html.ActionLink("Answer too(CLICK)!", "Answering", new { id = Model.Question.Id })
+                                </span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2"></div>
+</div>

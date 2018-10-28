@@ -1,0 +1,11 @@
+﻿@model CodeStart.Models.Answer
+
+<div class="answers-form">
+    @using (Html.BeginForm()){
+
+    @Html.TextAreaFor(model => model.Description, new { placeholder = "Type here your answer...", @class = "add-answer" });
+    <div align="right">
+        <button type="submit" class="btn form-answer-button">Enviar</button>
+    </div>
+    }
+</div>

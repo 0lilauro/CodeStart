@@ -5,10 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CodeStart.Models;
-using Models;
-using Services;
-
-
 
 namespace CodeStart.Controllers
 {
@@ -35,16 +31,45 @@ namespace CodeStart.Controllers
 
         public IActionResult Recent()
         {
-            QuestionService questionservice = new QuestionService();
-            List<Question> questions = questionservice.GetRecentQuestions();
-            ViewData["Message"] = "The latest questions";
-            ViewBag.Questions = questions;
-            return View();
+            ViewData["Message"] = "Recent Page";
+            QuestionService questionservice = HttpContext.RequestServices.GetService(typeof(CodeStart.Models.QuestionService)) as QuestionService;
+            return View(questionservice.GetRecentQuestions());
         }
+
+        [HttpGet]
+        public IActionResult Answer(int id)
+        {
+            ViewData["Message"] = "Recent Page";
+            QuestionService questionservice = HttpContext.RequestServices.GetService(typeof(CodeStart.Models.QuestionService)) as QuestionService;
+            AnswerService answerservice = HttpContext.RequestServices.GetService(typeof(CodeStart.Models.AnswerService)) as AnswerService;
+
+            var viewModel = new ViewAnswers();
+            viewModel.Question = questionservice.GetQuestion(id);
+            viewModel.Answers = answerservice.GetAnswersQuestion(id);
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Anasdswer(int id, Answer ans)
+        {
+            ViewData["Message"] = "Recent Page";
+            QuestionService questionservice = HttpContext.RequestServices.GetService(typeof(CodeStart.Models.QuestionService)) as QuestionService;
+            AnswerService answerservice = HttpContext.RequestServices.GetService(typeof(CodeStart.Models.AnswerService)) as AnswerService;
+
+            var viewModel = new ViewAnswers();
+            viewModel.Question = questionservice.GetQuestion(id);
+            viewModel.Answers = answerservice.GetAnswersQuestion(id);
+            return View(viewModel);
+        }
+
 
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public PartialViewResult Form()
+        {
+            return PartialView();
         }
     }
 }

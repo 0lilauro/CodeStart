@@ -1,8 +1,22 @@
 ﻿@model IEnumerable<CodeStart.Models.Question>
 @{
-    ViewData["Title"] = "Recent Questions";
+    ViewData["Title"] = "Question";
+    Layout = "~/Views/Shared/_Logged.cshtml";
+
 }
 <style>
+    .little-text {
+        font-size: 16px !important;
+        border: 1px solid deeppink;
+        color: deeppink;
+        transitio: 1s;
+    }
+    .little-text:hover {
+        color: white;
+        font-size: 16px !important;
+        border: 1px solid white;
+        text-decoration:none;
+    }
 </style>
 
 <div class="row">
@@ -11,17 +25,29 @@
         <div class="middle-content">
             <div class="to-middle mr-2 ml-2">
                 <center>
-                    <h1 class="pb-1"><span class="to-purple">Latest</span> questions</h1>
+                    <h1 class="pb-1"><span class="to-purple">Latest</span>questions</h1>
                     <hr class="gray-bar">
                 </center>
 
                 <div class="mt-2 question-area">
-                    @foreach (var item in Model) {
+                    <div class="mt-5">
+
+                        <center>
+                            <a asp-area="" asp-controller="User" asp-action="Ask" class="btn mt-5 mb-4 menu-link little-text">
+                              Do your Question (CLICK)!
+                            </a>
+                        </center>
+
+                    </div>
+                    @foreach (var item in Model)
+                    {
                         <div class="question-content p-4">
                             <div class="head-question">
-                                <small>By @Html.DisplayFor(modelItem => item.User.Username) |
-                                @Html.DisplayFor(modelItem => item.Postdate) |
-                                <i class="fa fa-eye" aria-hidden="true"></i> @Html.DisplayFor(modelItem => item.View)</small>
+                                <small>
+                                    By @Html.DisplayFor(modelItem => item.User.Username) |
+                                    @Html.DisplayFor(modelItem => item.Postdate) |
+                                    <i class="fa fa-eye" aria-hidden="true"></i> @Html.DisplayFor(modelItem => item.View)
+                                </small>
                                 <h6>
                                     @Html.DisplayFor(modelItem => item.Tittle)
                                 </h6>
@@ -30,7 +56,7 @@
                             <div class="pl-3">
                                 <p>
                                     @Html.DisplayFor(modelItem => item.Description) . . . &nbsp;
-                                    @Html.ActionLink("See More", "Answer", new {  id=item.Id })
+                                    @Html.ActionLink("See More", "Answer", new { id = item.Id })
                                 </p>
                                 <div class="tags-content">
                                     @foreach (var value in item.Tags)

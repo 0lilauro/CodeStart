@@ -1,0 +1,51 @@
+﻿@model CodeStart.Models.User;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="middle-content">
+            <div class="to-middle mr-2 ml-2">
+                <center>
+                    <h1 class="pb-1">Login</h1>
+                    <hr class="gray-bar">
+                </center>
+
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="mt-2 question-area">
+                            <div class="question-content p-4 mb-3">
+                                @using (Html.BeginForm())
+                                {
+                                    <div class="pl-4">
+                                        <div class="answers-content mb-4">
+                                            <h4 class="mt-4">Email:</h4>
+                                            <!-- <input type="text" name="email" class="form-input" placeholder="Enter your email..."> -->
+                                            @Html.TextBoxFor(model => model.Email, new { placeholder = "Enter your email...", @class = "form-input" })
+                                            <br>
+                                            <h4 class="mt-4">Password:</h4>
+                                            <!-- <input type="password" name="password" class="form-input" placeholder="Enter your password...">-->
+                                            @Html.PasswordFor(model => model.Password, new { placeholder = "Enter your password", @class = "form-input"})
+                                            </div>
+                                            <center>
+                                                <button type="submit" class="btn btn-lg form-answer-button button-big">Register</button>
+                                            </center>
+                                        </div>
+
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>

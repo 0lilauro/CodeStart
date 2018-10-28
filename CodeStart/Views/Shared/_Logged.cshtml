@@ -1,4 +1,14 @@
-﻿
+﻿@using Microsoft.AspNetCore.Http
+@{
+    string username = Context.Session.GetString("USERNAME");
+    int id = Convert.ToInt32(Context.Session.GetInt32("ID"));
+
+    if (!(id != null || username != null))
+    {
+        username = "undefined";
+        id = 0;
+    }
+}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -36,13 +46,13 @@
                     <img src="~/img/LogoWhite.png" id="header-logo">
                 </li>
                 <li><a asp-area="" asp-controller="Home" asp-action="Index" class="menu-link actived">Home</a></li>
-                <li><a asp-area="" asp-controller="Home" asp-action="Recent" class="menu-link">Questions</a></li>
+                <li><a asp-area="" asp-controller="User" asp-action="Question" class="menu-link">Questions</a></li>
                 <li><a asp-area="" asp-controller="Home" asp-action="Index" class="menu-link">Tags</a></li>
                 <li><a asp-area="" asp-controller="Home" asp-action="Index" class="menu-link">Rank</a></li>
             </ul>
             <ul class="register-navbar float-left">
-                <li><a asp-area="" asp-controller="User" asp-action="Create" class="menu-link">Register</a></li>
-                <li><a asp-area="" asp-controller="User" asp-action="Login" class="menu-link">Log In</a></li>
+                <li><a asp-area="" asp-controller="User" asp-action="Exit" class="menu-link">Exit</a></li>
+                <li><a asp-area="" asp-controller="User" asp-action="Profile" class="menu-link">@username</a></li>
             </ul>
         </nav>
     </header>
@@ -51,8 +61,8 @@
             @RenderBody()
         </div>
     </section>
-        
-    
+
+
     <!-- <footer id="footer"></footer> -->
 </body>
 </html>

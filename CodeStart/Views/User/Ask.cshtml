@@ -1,0 +1,51 @@
+﻿@model CodeStart.Models.Question
+@{
+    ViewData["Title"] = "Ask";
+    Layout = "~/Views/Shared/_Logged.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="middle-content">
+            <div class="to-middle mr-2 ml-2">
+                <center>
+                    <h1 class="pb-1">Make a Question</h1>
+                    <hr class="gray-bar">
+                </center>
+
+                <div class="mt-2 question-area">
+                    <div class="question-content p-4 mb-3">
+                        @using (Html.BeginForm())
+                        {
+                        <div class="pl-4">
+                            <div class="answers-content mb-4">
+                                <h4 class="mt-4">Title:</h4>
+                                @Html.TextBoxFor(model => model.Tittle, new { placeholder = "Type here your doubt title...", @class = "form-input" })
+                            </div>
+                            <div class="answers-content mb-4">
+                                <h4 class="mt-4">Tags:</h4>
+                                @Html.TextBoxFor(model => model.Fulltag, new { placeholder = "Type here your tags, separetated by ','", @class = "form-input" })
+                            </div>
+                            
+                            <div class="answers-content mb-4">
+                                <h4 class="mt-4">Question:</h4>
+                                @Html.TextAreaFor(model => model.Description, new { placeholder = "Type here your doubt...", @class = "add-answer" })
+                            </div>
+                            <center>
+                                <button type="submit" class="btn btn-lg form-answer-button button-big">Send</button>
+                            </center>
+                        </div>
+                        }
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+</div>
