@@ -1,0 +1,57 @@
+﻿@model CodeStart.Models.User 
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+        <div class="middle-content">
+            <div class="to-middle mr-2 ml-2">
+                <center>
+                    <h1 class="pb-1">Register</h1>
+                    <hr class="gray-bar">
+                </center>
+
+                <div class="mt-2 question-area">
+                    <div class="question-content p-4 mb-3">
+                        @using (Html.BeginForm()){ 
+                            <div class="pl-4">
+                                <div class="answers-content mb-4">
+                                    <h4 class="mt-4">Name:</h4>
+                                    @Html.TextBoxFor(model => model.Name, new { placeholder = "Enter your name...", @class = "form-input" });
+                                </div>
+                                <div class="answers-content mb-4">
+                                    <h4 class="mt-4">Username:</h4>
+                                    @Html.TextBoxFor(model => model.Username, new { placeholder = "Enter your username...", @class = "form-input" });
+                                </div>
+                                <div class="answers-content mb-4">
+                                    <h4 class="mt-4">Email:</h4>
+                                    @Html.TextBoxFor(model => model.Email, new { placeholder = "Enter your email...", @class = "form-input" });
+                                </div>
+                                <div class="answers-content mb-4">
+                                    <h4 class="mt-4">Password:</h4>
+                                    @Html.PasswordFor(model => model.Password, new { placeholder = "Enter your password...", @class = "form-input" });
+                                </div>
+                                <div class="answers-content mb-4">
+                                    <h4 class="mt-4">Birth:</h4>
+                                    @Html.TextBoxFor(model => model.Birth, new { placeholder = "Enter your name...", @class = "form-input",type="date" });
+                                </div>
+                                <div class="answers-content mb-4">
+                                    <h4 class="mt-4">About:</h4>
+                                    @Html.TextAreaFor(model => model.About, new { placeholder = "Tell us a little about you...", @class = "add-answer" });
+                                </div>
+                                <center>
+                                    <button type="submit" class="btn btn-lg form-answer-button button-big">Register</button>
+                                </center>
+                            </div>
+                         }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+    </div>
+</div>

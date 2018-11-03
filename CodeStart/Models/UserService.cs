@@ -107,5 +107,57 @@ namespace CodeStart.Models
                 return null;
             }
         }
+
+        public User Register(User user)
+        {
+
+            if ((user != null) && ((user.Email != null) && (user.Password != null)))
+            {
+                using (MySqlConnection conn = GetConnection())
+                {
+
+                    conn.Open();
+                    MySqlCommand command = new MySqlCommand();
+                    command.CommandText = "CALL ADD_USER(@NAME,@USERNAME,@EMAIL,@PASSWORD,@ABOUT,@BIRTH);";
+
+                    try
+                    {
+                        command.Connection = conn;
+                        command.Prepare();
+                        command.Parameters.AddWithValue("@EMAIL", user.Email);
+                        command.Parameters.AddWithValue("@NAME", user.Name);
+                        command.Parameters.AddWithValue("@USERNAME", user.Username);
+                        command.Parameters.AddWithValue("@PASSWORD", user.Password);
+                        command.Parameters.AddWithValue("@ABOUT", user.About);
+                        command.Parameters.AddWithValue("@BIRTH", user.Birth);
+
+                       
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                user.Id = Convert.ToInt32(reader["ID"]);
+
+                            }
+                        }
+                        return user;
+
+
+                    }
+                    catch (Exception e)
+                    {
+
+                        throw new Exception("ERRO:" + e.Message.ToString());
+                        return null;
+                    }
+
+                }
+
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

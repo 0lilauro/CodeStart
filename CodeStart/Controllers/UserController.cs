@@ -16,11 +16,32 @@ namespace CodeStart.Controllers
             return View();
         }
         [HttpGet]
+        public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Register(User user)
+        {
+            UserService userservice = HttpContext.RequestServices.GetService(typeof(CodeStart.Models.UserService)) as UserService;
+            User obj = userservice.Register(user);
+            if (obj != null && obj.Name != null)
+            {
+                HttpContext.Session.SetInt32("ID", obj.Id);
+                HttpContext.Session.SetString("USERNAME", obj.Username);
+                return Redirect("/User/Index");
+            }
+            else
+            {
+                return Redirect("/User/Login");
+            }
+        }
+        [HttpGet]
         public IActionResult Login()
         {
             return View();
 
-           
         }
         [HttpPost]
         public IActionResult Login(User user)
